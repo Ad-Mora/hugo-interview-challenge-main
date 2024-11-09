@@ -9,7 +9,8 @@
         "start:api": "nodemon --inspect --watch \"api/**/*\" --exec node --require @swc-node/register --require dotenv/config ./api/index.ts",
         "start:client": "vite ./client",
         "start": "concurrently --kill-others \"npm run start:api\" \"npm run start:client\"",
-        "migrate": "prisma migrate dev --schema ./api/prisma/schema.prisma"
+        "migrate": "prisma migrate dev --schema ./api/prisma/schema.prisma",
+        "studio": "prisma studio --schema ./api/prisma/schema.prisma"
     },
     "repository": {
         "type": "git",

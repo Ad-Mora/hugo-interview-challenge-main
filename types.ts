@@ -6,16 +6,14 @@ interface Vehicle {
 }
 
 interface Application {
-    id: string;
+    id: number;
     firstName: string;
     lastName: string;
-    dob: Date;
-    address: {
-        street: string;
-        city: string;
-        state: string;
-        zipcode?: string;
-    };
+    dob: string; // yyyy-mm-dd
+    street: string;
+    city: string;
+    state: string;
+    zipcode?: string;
     vehicles: [Vehicle];
 }
 
