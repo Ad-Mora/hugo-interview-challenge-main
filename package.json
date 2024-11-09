@@ -2,11 +2,14 @@
     "name": "hugo-interview-challenge",
     "version": "1.0.0",
     "description": "Interview starter project for the Hugo take home project",
+    "engines": {
+        "node": ">=16"
+    },
     "scripts": {
         "start:api": "nodemon --inspect --watch \"api/**/*\" --exec node --require @swc-node/register --require dotenv/config ./api/index.ts",
         "start:client": "vite ./client",
         "start": "concurrently --kill-others \"npm run start:api\" \"npm run start:client\"",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "migrate": "prisma migrate dev --schema ./api/prisma/schema.prisma"
     },
     "repository": {
         "type": "git",
