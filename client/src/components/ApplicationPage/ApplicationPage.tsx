@@ -77,7 +77,9 @@ function App() {
                 <h1 className={styles.formHeader}>Application Form</h1>
                 <div className={styles.fieldsContainer}>
                     <AppField
-                        name="firstName"
+                        fieldName="firstName"
+                        label="First Name"
+                        placeholder="e.g. Hugo"
                         values={values}
                         errors={errors}
                         setValues={setValues}
@@ -85,7 +87,9 @@ function App() {
                     />
 
                     <AppField
-                        name="lastName"
+                        fieldName="lastName"
+                        label="Last Name"
+                        placeholder="e.g. Insurance"
                         values={values}
                         errors={errors}
                         setValues={setValues}
@@ -93,7 +97,9 @@ function App() {
                     />
 
                     <AppField
-                        name="dob"
+                        fieldName="dob"
+                        label="Date of Birth"
+                        placeholder="e.g. 1995-01-01"
                         values={values}
                         errors={errors}
                         setValues={setValues}
@@ -101,7 +107,9 @@ function App() {
                     />
 
                     <AppField
-                        name="street"
+                        fieldName="street"
+                        label="Street"
+                        placeholder="e.g. 123 Ez St"
                         values={values}
                         errors={errors}
                         setValues={setValues}
@@ -109,7 +117,9 @@ function App() {
                     />
 
                     <AppField
-                        name="city"
+                        fieldName="city"
+                        label="City"
+                        placeholder="e.g. Boston"
                         values={values}
                         errors={errors}
                         setValues={setValues}
@@ -117,7 +127,9 @@ function App() {
                     />
 
                     <AppField
-                        name="state"
+                        fieldName="state"
+                        label="State"
+                        placeholder="e.g. MA"
                         values={values}
                         errors={errors}
                         setValues={setValues}
@@ -125,7 +137,9 @@ function App() {
                     />
 
                     <AppField
-                        name="zipcode"
+                        fieldName="zipcode"
+                        label="Zipcode"
+                        placeholder="e.g. 08816"
                         values={values}
                         errors={errors}
                         setValues={setValues}
@@ -133,7 +147,8 @@ function App() {
                     />
 
                     <AppField
-                        name="vehicles"
+                        fieldName="vehicles"
+                        label="Vehicles"
                         values={values}
                         errors={errors}
                         setValues={setValues}
