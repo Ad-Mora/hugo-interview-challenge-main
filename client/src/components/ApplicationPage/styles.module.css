@@ -28,6 +28,7 @@
 .buttonsContainer {
     display: flex;
     align-items: center;
+    margin-bottom: 20px;
 }
 
 .saveButton {
@@ -62,4 +63,14 @@
     &:hover {
         background-color: #228e3b;
     }
+}
+
+.submissionError {
+    font-size: 18px;
+    color: red;
+}
+
+.submissionData {
+    font-size: 20px;
+    font-weight: bold;
 }

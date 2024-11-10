@@ -16,7 +16,7 @@ function App() {
     const [saveLoading, setSaveLoading] = useState(false);
     const [submitLoading, setSubmitLoading] = useState(false);
     const [submissionError, setSubmissionError] = useState('');
-    const [submissionInfo, setSubmissionInfo] = useState('');
+    const [submissionData, setSubmissionData] = useState('');
     const { id } = useParams<{ id: string }>();
 
     async function initData() {
@@ -31,6 +31,14 @@ function App() {
         }
     }
 
+    function isSaveValid() {
+        return true;
+    }
+
+    function isSubmitValid() {
+        return true;
+    }
+
     // initialize the form's data
     useEffect(() => {
         initData();
@@ -39,12 +47,19 @@ function App() {
     async function handleSave(e: React.MouseEvent<HTMLButtonElement>) {
         e.preventDefault();
         setSaveLoading(true);
+        setSubmissionData('');
+        setSubmissionError('');
     }
 
     async function handleSubmit(e: React.MouseEvent<HTMLButtonElement>) {
         e.preventDefault();
         setSubmitLoading(true);
+        setSubmissionData('');
+        setSubmissionError('');
     }
+
+    const saveValid = isSaveValid();
+    const submitValid = isSubmitValid();
 
     if (pageLoading) {
         return (
@@ -128,7 +143,7 @@ function App() {
                 <div className={styles.buttonsContainer}>
                     <SubmissionButton
                         text={'Save'}
-                        isValid={false}
+                        isValid={saveValid}
                         isLoading={saveLoading}
                         handler={handleSave}
                         validStyles={styles.saveButton}
@@ -136,11 +151,20 @@ function App() {
 
                     <SubmissionButton
                         text={'Submit'}
-                        isValid={true}
+                        isValid={submitValid}
                         isLoading={submitLoading}
                         handler={handleSubmit}
                         validStyles={styles.submitButton}
                     />
+                </div>
+
+                <div className={styles.submissionDataSection}>
+                    {submissionError !== '' && (
+                        <p className={styles.submissionError}>{submissionError}</p>
+                    )}
+                    {submissionData !== '' && (
+                        <p className={styles.submissionData}>{submissionData}</p>
+                    )}
                 </div>
             </div>
         );
