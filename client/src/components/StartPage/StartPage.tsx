@@ -1,12 +1,25 @@
 import { useState } from 'react';
 import styles from './styles.module.css';
 import spinner from '../../assets/spinner.svg';
+import axios from 'axios';
+import { API_ROOT } from '../../constants';
+import thirdPartyInitData from '../../third-party-init-data';
+import { useNavigate } from 'react-router-dom';
 
 function StartPage() {
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
+
     async function handleStart() {
         setLoading(true);
-        // TODO
+        try {
+            const response = await axios.post(`${API_ROOT}`, thirdPartyInitData);
+            const newRoute = response.data.route;
+            navigate(newRoute);
+        } catch (e) {
+            console.error('Error initializing application data');
+            setLoading(false);
+        }
     }
 
     return (
