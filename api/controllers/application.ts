@@ -30,7 +30,11 @@ export async function createApplicationController(req: Request, res: Response) {
 
 export async function getApplicationController(req: Request, res: Response) {
     try {
-        return getApplication(parseInt(req.params.id));
+        const appId = parseInt(req.params.id);
+        if (isNaN(appId)) {
+            throw new ValidationError('App ID is invalid.');
+        }
+        return getApplication(appId);
     } catch (e) {
         console.error(`Error getting application: ${e}`);
         return res.status(500).json({
@@ -42,7 +46,8 @@ export async function getApplicationController(req: Request, res: Response) {
 export async function updateApplicationController(req: Request, res: Response) {
     try {
         const parsedApplicationInput = parseApplication(req.body, true);
-        return updateApplication(parsedApplicationInput);
+        const appId = parsedApplicationInput.id!;
+        return updateApplication(appId, parsedApplicationInput);
     } catch (e) {
         console.error(`Error updating application: ${e}`);
         if (e instanceof ValidationError) {

@@ -1,3 +1,7 @@
+type Nullable<T> = {
+    [P in keyof T]: T[P] | null;
+};
+
 interface Vehicle {
     vin: string;
     year: number;
@@ -9,12 +13,14 @@ interface Application {
     id: number;
     firstName: string;
     lastName: string;
-    dob: string; // yyyy-mm-dd
+    dob: string;
     street: string;
     city: string;
     state: string;
-    zipcode?: string;
+    zipcode: string | null;
     vehicles: [Vehicle];
 }
 
-export { Application };
+type IncompleteApplication = Partial<Nullable<Application>>;
+
+export { Application, Vehicle, IncompleteApplication };

@@ -9,12 +9,12 @@ datasource db {
 
 model Application {
   id            Int      @id @default(autoincrement())
-  firstName     String
-  lastName      String
-  dob           DateTime
-  street        String
-  city          String
-  state         String
+  firstName     String?
+  lastName      String?
+  dob           String?
+  street        String?
+  city          String?
+  state         String?
   zipcode       String?
-  vehicles      String // json
+  vehicles      String? // json array
 }
