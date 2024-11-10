@@ -1,0 +1,13 @@
+.container {
+    font-family: Helvetica, sans-serif;
+    padding-left: 30px;
+    padding-top: 30px;
+    background-color: #eee;
+    height: 100vh;
+}
+
+.formHeader {
+    font-weight: bold;
+    font-size: 32px;
+    margin-bottom: 20px;
+}
