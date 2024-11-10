@@ -34,12 +34,22 @@ export async function getApplicationController(req: Request, res: Response) {
         if (isNaN(appId)) {
             throw new ValidationError('App ID is invalid.');
         }
-        return getApplication(appId);
+        const application = getApplication(appId);
+        if (application === null) {
+            return res.status(404).json({ message: 'Application not found.' });
+        }
+        return res.json({ data: application });
     } catch (e) {
         console.error(`Error getting application: ${e}`);
-        return res.status(500).json({
-            message: `Error getting application.`,
-        });
+        if (e instanceof ValidationError) {
+            return res
+                .status(400)
+                .json({ message: 'Error getting application - validation error.' });
+        } else {
+            return res.status(500).json({
+                message: `Error getting application.`,
+            });
+        }
     }
 }
 
@@ -65,7 +75,8 @@ export async function updateApplicationController(req: Request, res: Response) {
 export async function submitApplicationController(req: Request, res: Response) {
     try {
         const parsedApplicationInput = parseApplication(req.body, true, true);
-        await updateApplication(parsedApplicationInput);
+        const appId = parsedApplicationInput.id!;
+        await updateApplication(appId, parsedApplicationInput);
         return Math.floor(Math.random() * 100);
     } catch (e) {
         console.error(`Error submitting application: ${e}`);
