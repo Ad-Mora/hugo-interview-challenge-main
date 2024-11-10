@@ -1,0 +1,65 @@
+.container {
+    padding-left: 30px;
+    padding-top: 30px;
+    background-color: #eee;
+    height: 100vh;
+}
+
+.loadingText {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.pageLoadError {
+    color: red;
+}
+
+.formHeader {
+    font-weight: bold;
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+.fieldsContainer {
+    margin-bottom: 30px;
+}
+
+.buttonsContainer {
+    display: flex;
+    align-items: center;
+}
+
+.saveButton {
+    width: 100%;
+    background-color: #007bff;
+    outline: none;
+    border: none;
+    border-radius: 8px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 18px;
+    color: white;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #0065d1;
+    }
+}
+
+.submitButton {
+    width: 100%;
+    background-color: #28a745;
+    outline: none;
+    border: none;
+    border-radius: 8px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 18px;
+    color: white;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #228e3b;
+    }
+}

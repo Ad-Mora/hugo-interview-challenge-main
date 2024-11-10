@@ -1,0 +1,22 @@
+.buttonBox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    margin-right: 20px;
+}
+
+.disabledButton {
+    pointer-events: none;
+    cursor: not-allowed;
+    background-color: gray;
+    opacity: 0.5;
+}
+
+.disabledBox {
+    cursor: not-allowed;
+}
+
+.spinner {
+    height: 40px;
+}
