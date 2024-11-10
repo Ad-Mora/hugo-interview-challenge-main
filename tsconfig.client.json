@@ -19,5 +19,5 @@
         "noUnusedParameters": true,
         "noFallthroughCasesInSwitch": true
     },
-    "include": ["client/src", "types.ts"]
+    "include": ["client/src", "types.ts", "zod-schemas.ts"]
 }

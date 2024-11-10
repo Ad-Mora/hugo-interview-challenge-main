@@ -16,4 +16,4 @@ type Application = z.infer<typeof ApplicationSchema>;
 type InferredIncompleteApplication = z.infer<typeof IncompleteApplicationSchema>;
 type IncompleteApplication = Nullable<Partial<InferredIncompleteApplication>>;
 
-export { Application, Vehicle, IncompleteApplication };
+export type { Application, Vehicle, IncompleteApplication };

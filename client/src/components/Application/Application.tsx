@@ -1,20 +1,37 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import spinner from './assets/spinner.gif';
 import styles from './styles.module.css';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import type { IncompleteApplication } from '../../../../types';
+import { API_ROOT } from '../../constants';
 
-interface FormValues {
-    [key: string]: string;
-}
-
-interface FormErrors {
-    [key: string]: string;
-}
+type AppErrors = { [K in keyof IncompleteApplication]: string };
 
 function App() {
-    const [values, setValues] = useState<FormValues>({});
-    const [errors, setErrors] = useState<FormErrors>({});
+    const [values, setValues] = useState<IncompleteApplication>({});
+    const [errors, setErrors] = useState<AppErrors>({});
+    const [pageLoading, setPageLoading] = useState(true);
+    const [pageLoadError, setPageLoadError] = useState('');
     const [saveLoading, setSaveLoading] = useState(false);
     const [submitLoading, setSubmitLoading] = useState(false);
+    const { id } = useParams<{ id: string }>();
+
+    // initialize the form's data
+    useEffect(() => {
+        async function initData() {
+            try {
+                const appData = await axios.get(`${API_ROOT}/${id}`);
+                const data = appData.data.data as IncompleteApplication;
+                setValues(data);
+                setPageLoading(false);
+            } catch (e) {
+                console.error('Error getting application data', e);
+                setPageLoadError(`Could not find an application with id ${id}`);
+            }
+        }
+        initData();
+    }, []);
 
     function handleBlur(e: React.FocusEvent<HTMLInputElement>) {
         const { name, value } = e.target;
@@ -42,11 +59,20 @@ function App() {
         }
     }
 
-    return (
-        <div className={styles.container}>
-            <h1 className={styles.formHeader}>Application Form</h1>
-        </div>
-    );
+    if (pageLoading) {
+        return (
+            <div className={styles.container}>
+                <h1 className={styles.loadingText}>Loading application data...</h1>
+                <p className={styles.pageLoadError}>{pageLoadError}</p>
+            </div>
+        );
+    } else {
+        return (
+            <div className={styles.container}>
+                <h1 className={styles.formHeader}>Application Form</h1>
+            </div>
+        );
+    }
 }
 
 export default App;

@@ -5,6 +5,15 @@
     height: 100vh;
 }
 
+.loadingText {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.pageLoadError {
+    color: 'red';
+}
+
 .formHeader {
     font-weight: bold;
     font-size: 32px;
