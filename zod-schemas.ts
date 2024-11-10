@@ -29,7 +29,6 @@ const VehicleSchema = z.object({
 });
 
 const ApplicationSchema = z.object({
-    id: z.number(),
     firstName: z.string(),
     lastName: z.string(),
     dob: z.string(),

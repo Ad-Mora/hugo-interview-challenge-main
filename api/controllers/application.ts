@@ -76,7 +76,9 @@ export async function submitApplicationController(req: Request, res: Response) {
         const appId = parseId(req.params.id);
         const parsedApplicationInput = parseApplication(req.body, true);
         await updateApplication(appId, parsedApplicationInput);
-        return Math.floor(Math.random() * 100);
+        return res.json({
+            data: Math.floor(Math.random() * 100),
+        });
     } catch (e) {
         console.error(`Error submitting application: ${e}`);
         if (e instanceof ValidationError) {

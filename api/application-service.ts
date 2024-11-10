@@ -51,8 +51,10 @@ async function getApplication(id: number): Promise<IncompleteApplication | null>
 function parseApplication(reqBody: object, fullSchema = false) {
     if (fullSchema) {
         const result = ApplicationSchema.safeParse(reqBody);
-        if (!result.success)
+        if (!result.success) {
+            console.error(result.error);
             throw new ValidationError('Failed to validate full application schema.');
+        }
         return result.data as Application;
     } else {
         const result = IncompleteApplicationSchema.safeParse(reqBody);
