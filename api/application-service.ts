@@ -1,8 +1,16 @@
 import db from './db';
 import { Prisma, Application as DbApplication } from '@prisma/client';
 import { Application, Vehicle, IncompleteApplication } from '../types';
-import { ApplicationSchema } from '../zod-schemas';
+import { ApplicationSchema, IncompleteApplicationSchema } from '../zod-schemas';
 import ValidationError from './errors';
+
+function parseId(id: string) {
+    const appId = parseInt(id);
+    if (isNaN(appId)) {
+        throw new ValidationError('App ID is invalid.');
+    }
+    return appId;
+}
 
 // transform the data from the DTO format to the DB format
 function convertAppToDbFormat(data: IncompleteApplication) {
@@ -40,18 +48,26 @@ async function getApplication(id: number): Promise<IncompleteApplication | null>
 
 // use zod schemas to parse and validate the application data provided from the
 // request body
-function parseApplication(reqBody: object, requireId = false, fullSchema = false) {
+function parseApplication(reqBody: object, fullSchema = false) {
     if (fullSchema) {
         const result = ApplicationSchema.safeParse(reqBody);
         if (!result.success)
             throw new ValidationError('Failed to validate full application schema.');
         return result.data as Application;
     } else {
-        const result = ApplicationSchema.partial().safeParse(reqBody);
-        if (!result.success || (requireId && result.data.id == null))
+        const result = IncompleteApplicationSchema.safeParse(reqBody);
+        if (!result.success) {
+            console.error(result.error);
             throw new ValidationError('Failed to validate application schema.');
+        }
         return result.data as IncompleteApplication;
     }
 }
 
-export { createApplication, getApplication, updateApplication, parseApplication };
+export {
+    createApplication,
+    getApplication,
+    updateApplication,
+    parseApplication,
+    parseId,
+};

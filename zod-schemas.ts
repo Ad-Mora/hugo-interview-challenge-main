@@ -40,6 +40,6 @@ const ApplicationSchema = z.object({
     vehicles: z.array(VehicleSchema),
 });
 
-const NullablePartialApplicationSchema = makeSchemaNullableAndPartial(ApplicationSchema);
+const IncompleteApplicationSchema = makeSchemaNullableAndPartial(ApplicationSchema);
 
-export { VehicleSchema, ApplicationSchema, NullablePartialApplicationSchema };
+export { VehicleSchema, ApplicationSchema, IncompleteApplicationSchema };

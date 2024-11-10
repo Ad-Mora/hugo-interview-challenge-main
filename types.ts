@@ -2,7 +2,7 @@ import { z } from 'zod';
 import {
     VehicleSchema,
     ApplicationSchema,
-    NullablePartialApplicationSchema,
+    IncompleteApplicationSchema,
 } from './zod-schemas';
 
 type Nullable<T> = {
@@ -13,7 +13,7 @@ type Vehicle = z.infer<typeof VehicleSchema>;
 type Application = z.infer<typeof ApplicationSchema>;
 
 // inferred type doesn't account for nullability and partiality
-type InferredIncompleteApplication = z.infer<typeof NullablePartialApplicationSchema>;
+type InferredIncompleteApplication = z.infer<typeof IncompleteApplicationSchema>;
 type IncompleteApplication = Nullable<Partial<InferredIncompleteApplication>>;
 
 export { Application, Vehicle, IncompleteApplication };

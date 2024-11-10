@@ -5,6 +5,7 @@ import {
     getApplication,
     updateApplication,
     parseApplication,
+    parseId,
 } from '../application-service';
 
 export async function createApplicationController(req: Request, res: Response) {
@@ -30,11 +31,8 @@ export async function createApplicationController(req: Request, res: Response) {
 
 export async function getApplicationController(req: Request, res: Response) {
     try {
-        const appId = parseInt(req.params.id);
-        if (isNaN(appId)) {
-            throw new ValidationError('App ID is invalid.');
-        }
-        const application = getApplication(appId);
+        const appId = parseId(req.params.id);
+        const application = await getApplication(appId);
         if (application === null) {
             return res.status(404).json({ message: 'Application not found.' });
         }
@@ -55,9 +53,10 @@ export async function getApplicationController(req: Request, res: Response) {
 
 export async function updateApplicationController(req: Request, res: Response) {
     try {
-        const parsedApplicationInput = parseApplication(req.body, true);
-        const appId = parsedApplicationInput.id!;
-        return updateApplication(appId, parsedApplicationInput);
+        const appId = parseId(req.params.id);
+        const parsedApplicationInput = parseApplication(req.body);
+        await updateApplication(appId, parsedApplicationInput);
+        return res.json({ message: 'Successfully updated application!' });
     } catch (e) {
         console.error(`Error updating application: ${e}`);
         if (e instanceof ValidationError) {
@@ -74,8 +73,8 @@ export async function updateApplicationController(req: Request, res: Response) {
 
 export async function submitApplicationController(req: Request, res: Response) {
     try {
-        const parsedApplicationInput = parseApplication(req.body, true, true);
-        const appId = parsedApplicationInput.id!;
+        const appId = parseId(req.params.id);
+        const parsedApplicationInput = parseApplication(req.body, true);
         await updateApplication(appId, parsedApplicationInput);
         return Math.floor(Math.random() * 100);
     } catch (e) {

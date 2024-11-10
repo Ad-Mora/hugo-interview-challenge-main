@@ -4,6 +4,6 @@ import applicationRoutes from './application';
 
 const routes = Router();
 
-routes.use('/api/appliactions', applicationRoutes);
+routes.use('/api/applications', applicationRoutes);
 
 export default routes;
