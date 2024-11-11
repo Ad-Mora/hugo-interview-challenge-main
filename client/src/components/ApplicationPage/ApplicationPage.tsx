@@ -7,6 +7,7 @@ import type { AppErrors } from '../../types';
 import { API_ROOT } from '../../constants';
 import AppField from './AppField/AppField';
 import SubmissionButton from './SubmissionButton/SubmissionButton';
+import { ApplicationSchema } from '../../../../zod-schemas';
 
 function App() {
     const [values, setValues] = useState<IncompleteApplication>({});
@@ -31,14 +32,6 @@ function App() {
         }
     }
 
-    function isSaveValid() {
-        return true;
-    }
-
-    function isSubmitValid() {
-        return true;
-    }
-
     // initialize the form's data
     useEffect(() => {
         initData();
@@ -58,8 +51,8 @@ function App() {
         setSubmissionError('');
     }
 
-    const saveValid = isSaveValid();
-    const submitValid = isSubmitValid();
+    const saveValid = Object.values(errors).every((val) => !val);
+    const submitValid = saveValid && ApplicationSchema.safeParse(values).success;
 
     if (pageLoading) {
         return (
@@ -78,7 +71,7 @@ function App() {
                 <div className={styles.fieldsContainer}>
                     <AppField
                         fieldName="firstName"
-                        label="First Name"
+                        label="First Name*"
                         placeholder="e.g. Hugo"
                         values={values}
                         errors={errors}
@@ -88,7 +81,7 @@ function App() {
 
                     <AppField
                         fieldName="lastName"
-                        label="Last Name"
+                        label="Last Name*"
                         placeholder="e.g. Insurance"
                         values={values}
                         errors={errors}
@@ -98,7 +91,7 @@ function App() {
 
                     <AppField
                         fieldName="dob"
-                        label="Date of Birth"
+                        label="Date of Birth*"
                         placeholder="e.g. 1995-01-01"
                         values={values}
                         errors={errors}
@@ -108,7 +101,7 @@ function App() {
 
                     <AppField
                         fieldName="street"
-                        label="Street"
+                        label="Street*"
                         placeholder="e.g. 123 Ez St"
                         values={values}
                         errors={errors}
@@ -118,7 +111,7 @@ function App() {
 
                     <AppField
                         fieldName="city"
-                        label="City"
+                        label="City*"
                         placeholder="e.g. Boston"
                         values={values}
                         errors={errors}
@@ -128,7 +121,7 @@ function App() {
 
                     <AppField
                         fieldName="state"
-                        label="State"
+                        label="State*"
                         placeholder="e.g. MA"
                         values={values}
                         errors={errors}
@@ -148,7 +141,7 @@ function App() {
 
                     <AppField
                         fieldName="vehicles"
-                        label="Vehicles"
+                        label="Vehicles*"
                         values={values}
                         errors={errors}
                         setValues={setValues}

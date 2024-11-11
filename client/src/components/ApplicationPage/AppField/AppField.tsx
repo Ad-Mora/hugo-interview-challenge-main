@@ -3,6 +3,7 @@ import React from 'react';
 import { IncompleteApplication } from '../../../../../types';
 import { AppErrors, ApplicationField } from '../../../types';
 import VehiclesInput from '../VehiclesInput/VehiclesInput';
+import { IncompleteApplicationSchema } from '../../../../../zod-schemas';
 
 interface AppFieldProps {
     fieldName: ApplicationField;
@@ -29,33 +30,48 @@ function AppField({
     }
 
     function handleBlur(e: React.FocusEvent<HTMLInputElement>) {
-        const { name, value } = e.target;
+        const name = e.target.name as ApplicationField;
+        const value = e.target.value || null;
         setValues((prev) => ({ ...prev, [name]: value }));
-        validateField(name, value);
+        if (value) {
+            validateField(name, value);
+        } else {
+            setErrors((prev) => ({ ...prev, [name]: undefined }));
+        }
     }
 
-    function validateField(name: string, value: string) {
-        let error = '';
+    function validateField(name: ApplicationField, value: string) {
+        const relevantSchema = IncompleteApplicationSchema.pick({
+            [name]: true,
+        } as Record<ApplicationField, true>);
+        const result = relevantSchema.safeParse({ [name]: value });
+        let error: string | undefined = undefined;
+        if (!result.success) {
+            error = result.error.errors[0].message;
+        }
         setErrors((prev) => ({ ...prev, [name]: error }));
     }
 
     if (fieldName === 'vehicles') {
-        return <VehiclesInput />;
+        <VehiclesInput />;
     } else {
         const fieldValue = values[fieldName];
 
         return (
             <div className={styles.fieldContainer}>
-                <p className={styles.label}>{label}</p>
-                <input
-                    className={styles.textInput}
-                    name={fieldName}
-                    type="text"
-                    value={fieldValue ?? ''}
-                    placeholder={placeholder}
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                />
+                <div className={styles.inputContainer}>
+                    <p className={styles.label}>{label}</p>
+                    <input
+                        className={styles.textInput}
+                        name={fieldName}
+                        type="text"
+                        value={fieldValue ?? ''}
+                        placeholder={placeholder}
+                        onBlur={handleBlur}
+                        onChange={handleChange}
+                    />
+                </div>
+                <p className={styles.errorText}>{errors[fieldName]}</p>
             </div>
         );
     }

@@ -1,8 +1,14 @@
 .fieldContainer {
     display: flex;
     align-items: center;
-    width: 350px;
     margin-bottom: 5px;
+}
+
+.inputContainer {
+    display: flex;
+    align-items: center;
+    width: 350px;
+    margin-right: 20px;
 }
 
 .label {
@@ -20,4 +26,8 @@
         font-style: italic;
         opacity: 0.5;
     }
+}
+
+.errorText {
+    color: #dc3545;
 }
