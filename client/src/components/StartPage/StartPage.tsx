@@ -5,6 +5,7 @@ import axios from 'axios';
 import { API_ROOT } from '../../constants';
 import thirdPartyInitData from '../../third-party-init-data';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 function StartPage() {
     const [loading, setLoading] = useState(false);
@@ -17,7 +18,8 @@ function StartPage() {
             const newRoute = response.data.route;
             navigate(newRoute);
         } catch (e) {
-            console.error('Error initializing application data');
+            toast.error('Error initializing application data.');
+            console.error(e);
             setLoading(false);
         }
     }

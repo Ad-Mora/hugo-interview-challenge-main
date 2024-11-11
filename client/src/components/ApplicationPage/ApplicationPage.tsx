@@ -66,7 +66,14 @@ function App() {
         setSaveLoading(true);
         setSubmissionData('');
         setSubmissionError('');
-        toast.success('wow so easy');
+        try {
+            await axios.put(`${API_ROOT}/${id}`, values);
+            toast.success('Saved application!');
+        } catch (e) {
+            console.error(e);
+            toast.error('Error saving application.');
+        }
+        setSaveLoading(false);
     }
 
     async function handleSubmit(e: React.MouseEvent<HTMLButtonElement>) {
