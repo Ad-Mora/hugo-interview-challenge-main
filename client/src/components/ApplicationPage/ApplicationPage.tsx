@@ -3,12 +3,13 @@ import styles from './styles.module.css';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import type { IncompleteApplication, IncompleteVehicleData } from '../../../../types';
-import type { AppErrors, VehicleErrors } from '../../types';
+import type { AppErrors, VehicleErrors, VehicleFieldName } from '../../types';
 import { API_ROOT } from '../../constants';
 import AppField from './AppField/AppField';
 import SubmissionButton from './SubmissionButton/SubmissionButton';
 import { ApplicationSchema } from '../../../../zod-schemas';
 import Vehicles from './Vehicles/Vehicles';
+import { toast } from 'react-toastify';
 
 function App() {
     const [values, setValues] = useState<IncompleteApplication>({});
@@ -43,12 +44,29 @@ function App() {
         setValues((prev) => ({ ...prev, vehicles }));
     }
 
+    function isSaveValid() {
+        const noAppErrors = Object.values(errors).every((val) => !val);
+        let noVehicleErrors = true;
+
+        Object.keys(vehicleErrors).forEach((id) => {
+            const singleVehicleErrors = vehicleErrors[id];
+            Object.keys(singleVehicleErrors).forEach((fieldName) => {
+                const errorValue = singleVehicleErrors[fieldName as VehicleFieldName];
+                if (errorValue != null) {
+                    noVehicleErrors = false;
+                }
+            });
+        });
+
+        return noAppErrors && noVehicleErrors;
+    }
+
     async function handleSave(e: React.MouseEvent<HTMLButtonElement>) {
         e.preventDefault();
         setSaveLoading(true);
         setSubmissionData('');
         setSubmissionError('');
-        // TODO confirm save with Toast
+        toast.success('wow so easy');
     }
 
     async function handleSubmit(e: React.MouseEvent<HTMLButtonElement>) {
@@ -56,10 +74,10 @@ function App() {
         setSubmitLoading(true);
         setSubmissionData('');
         setSubmissionError('');
-        // TODO confirm submit with Toast
+        toast.success('wow so easy');
     }
 
-    const saveValid = Object.values(errors).every((val) => !val);
+    const saveValid = isSaveValid();
     const submitValid = saveValid && ApplicationSchema.safeParse(values).success;
 
     if (pageLoading) {
