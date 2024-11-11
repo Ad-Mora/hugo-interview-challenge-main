@@ -6,7 +6,7 @@ interface SubmissionButtonProps {
     text: string;
     isValid: boolean;
     isLoading: boolean;
-    handler: (e: React.MouseEvent<HTMLButtonElement>) => Promise<void>;
+    handler: (e: React.MouseEvent<HTMLButtonElement>) => Promise<void> | void;
     validStyles: string;
 }
 

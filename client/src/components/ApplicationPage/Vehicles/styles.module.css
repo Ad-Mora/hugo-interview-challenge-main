@@ -5,6 +5,7 @@
 .headerContainer {
     display: flex;
     align-items: center;
+    margin-bottom: 15px;
 }
 
 .headerText {
@@ -26,6 +27,13 @@
     &:hover {
         background-color: #0065d1;
     }
+}
+
+.disabledButton {
+    pointer-events: none;
+    cursor: not-allowed;
+    background-color: gray;
+    opacity: 0.5;
 }
 
 .bottomBorder {
