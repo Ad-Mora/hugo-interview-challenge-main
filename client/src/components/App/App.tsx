@@ -13,7 +13,7 @@ function App() {
                     <Route path="/applications/:id" element={<ApplicationPage />} />
                 </Routes>
             </Router>
-            <ToastContainer hideProgressBar={true} />
+            <ToastContainer hideProgressBar={true} autoClose={4000} />
         </>
     );
 }

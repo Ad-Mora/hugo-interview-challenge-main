@@ -57,7 +57,7 @@ function Vehicles({
     return (
         <div className={styles.container}>
             <div className={styles.headerContainer}>
-                <h1 className={styles.headerText}>Vehicles</h1>
+                <h1 className={styles.headerText}>Vehicles*</h1>
                 <button className={vehicleButtonStyles} onClick={handleAddVehicle}>
                     Add Vehicle
                 </button>

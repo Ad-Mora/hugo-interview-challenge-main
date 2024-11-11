@@ -42,7 +42,7 @@ function VehicleInput({
                 <h1 className={styles.vehicleHeader}>Vehicle {vehicleNum}</h1>
                 <VehicleField
                     fieldName="vin"
-                    label="VIN"
+                    label="VIN*"
                     placeholder="e.g. 12345678"
                     vehicleId={id}
                     vehicles={vehicles}
@@ -53,7 +53,7 @@ function VehicleInput({
 
                 <VehicleField
                     fieldName="year"
-                    label="Year"
+                    label="Year*"
                     placeholder="e.g. 2015"
                     isNumberField={true}
                     vehicleId={id}
@@ -65,7 +65,7 @@ function VehicleInput({
 
                 <VehicleField
                     fieldName="make"
-                    label="Make"
+                    label="Make*"
                     placeholder="e.g. Toyota"
                     vehicleId={id}
                     vehicles={vehicles}
@@ -76,7 +76,7 @@ function VehicleInput({
 
                 <VehicleField
                     fieldName="model"
-                    label="Model"
+                    label="Model*"
                     placeholder="e.g. RAV4"
                     vehicleId={id}
                     vehicles={vehicles}

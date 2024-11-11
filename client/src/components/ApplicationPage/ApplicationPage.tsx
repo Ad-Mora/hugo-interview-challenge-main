@@ -19,7 +19,6 @@ function App() {
     const [pageLoadError, setPageLoadError] = useState('');
     const [saveLoading, setSaveLoading] = useState(false);
     const [submitLoading, setSubmitLoading] = useState(false);
-    const [submissionError, setSubmissionError] = useState('');
     const [submissionData, setSubmissionData] = useState('');
     const { id } = useParams<{ id: string }>();
 
@@ -65,7 +64,6 @@ function App() {
         e.preventDefault();
         setSaveLoading(true);
         setSubmissionData('');
-        setSubmissionError('');
         try {
             await axios.put(`${API_ROOT}/${id}`, values);
             toast.success('Saved application!');
@@ -80,8 +78,16 @@ function App() {
         e.preventDefault();
         setSubmitLoading(true);
         setSubmissionData('');
-        setSubmissionError('');
-        toast.success('wow so easy');
+        try {
+            const response = await axios.post(`${API_ROOT}/${id}/submit`, values);
+            const quote = response.data.data;
+            setSubmissionData(quote);
+            toast.success('Submitted application!');
+        } catch (e) {
+            console.error(e);
+            toast.error('Error submitting application.');
+        }
+        setSubmitLoading(false);
     }
 
     const saveValid = isSaveValid();
@@ -197,11 +203,10 @@ function App() {
                 </div>
 
                 <div className={styles.submissionDataSection}>
-                    {submissionError !== '' && (
-                        <p className={styles.submissionError}>{submissionError}</p>
-                    )}
                     {submissionData !== '' && (
-                        <p className={styles.submissionData}>{submissionData}</p>
+                        <p className={styles.submissionData}>
+                            Insurance quote: ${submissionData}
+                        </p>
                     )}
                 </div>
             </div>

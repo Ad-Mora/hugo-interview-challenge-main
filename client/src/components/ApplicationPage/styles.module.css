@@ -28,7 +28,7 @@
 .buttonsContainer {
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 50px;
 }
 
 .saveButton {
