@@ -5,7 +5,7 @@ import VehicleInput from './VehicleInput/VehicleInput';
 
 interface VehicleProps {
     vehicles: IncompleteVehicleData[] | null | undefined;
-    setVehicles: (vehicles: IncompleteVehicleData[]) => void;
+    setVehicles: (vehicles: IncompleteVehicleData[] | null) => void;
     vehicleErrors: VehicleErrors;
     setVehicleErrors: React.Dispatch<React.SetStateAction<VehicleErrors>>;
 }

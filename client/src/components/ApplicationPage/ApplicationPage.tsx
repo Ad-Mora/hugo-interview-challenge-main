@@ -48,6 +48,7 @@ function App() {
         setSaveLoading(true);
         setSubmissionData('');
         setSubmissionError('');
+        // TODO confirm save with Toast
     }
 
     async function handleSubmit(e: React.MouseEvent<HTMLButtonElement>) {
@@ -55,6 +56,7 @@ function App() {
         setSubmitLoading(true);
         setSubmissionData('');
         setSubmissionError('');
+        // TODO confirm submit with Toast
     }
 
     const saveValid = Object.values(errors).every((val) => !val);

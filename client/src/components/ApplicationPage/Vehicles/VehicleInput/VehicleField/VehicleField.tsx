@@ -5,6 +5,7 @@ import { VehicleErrors, VehicleFieldName } from '../../../../../types';
 interface VehicleFieldProps {
     fieldName: VehicleFieldName;
     label: string;
+    isNumberField?: boolean;
     vehicleId: string;
     placeholder: string;
     vehicles: IncompleteVehicleData[];
@@ -29,6 +30,7 @@ function VehicleField({
     fieldName,
     label,
     vehicleId,
+    isNumberField,
     placeholder,
     vehicles,
     setVehicles,
@@ -57,6 +59,7 @@ function VehicleField({
 
     const currentVehicle = findById(vehicles, vehicleId);
     const fieldValue = currentVehicle[fieldName];
+    const inputType = isNumberField ? 'number' : 'text';
 
     return (
         <div className={styles.fieldContainer}>
@@ -65,7 +68,7 @@ function VehicleField({
                 <input
                     className={styles.textInput}
                     name={fieldName}
-                    type="text"
+                    type={inputType}
                     value={fieldValue ?? ''}
                     placeholder={placeholder}
                     onBlur={handleBlur}
