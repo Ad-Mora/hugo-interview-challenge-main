@@ -2,16 +2,18 @@ import { useState, useEffect } from 'react';
 import styles from './styles.module.css';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import type { IncompleteApplication } from '../../../../types';
-import type { AppErrors } from '../../types';
+import type { IncompleteApplication, IncompleteVehicleData } from '../../../../types';
+import type { AppErrors, VehicleErrors } from '../../types';
 import { API_ROOT } from '../../constants';
 import AppField from './AppField/AppField';
 import SubmissionButton from './SubmissionButton/SubmissionButton';
 import { ApplicationSchema } from '../../../../zod-schemas';
+import Vehicles from './Vehicles/Vehicles';
 
 function App() {
     const [values, setValues] = useState<IncompleteApplication>({});
     const [errors, setErrors] = useState<AppErrors>({});
+    const [vehicleErrors, setVehicleErrors] = useState<VehicleErrors>({});
     const [pageLoading, setPageLoading] = useState(true);
     const [pageLoadError, setPageLoadError] = useState('');
     const [saveLoading, setSaveLoading] = useState(false);
@@ -36,6 +38,10 @@ function App() {
     useEffect(() => {
         initData();
     }, []);
+
+    function setVehicles(vehicles: IncompleteVehicleData[] | null) {
+        setValues((prev) => ({ ...prev, vehicles }));
+    }
 
     async function handleSave(e: React.MouseEvent<HTMLButtonElement>) {
         e.preventDefault();
@@ -138,16 +144,13 @@ function App() {
                         setValues={setValues}
                         setErrors={setErrors}
                     />
-
-                    <AppField
-                        fieldName="vehicles"
-                        label="Vehicles*"
-                        values={values}
-                        errors={errors}
-                        setValues={setValues}
-                        setErrors={setErrors}
-                    />
                 </div>
+                <Vehicles
+                    vehicles={values.vehicles}
+                    setVehicles={setVehicles}
+                    vehicleErrors={vehicleErrors}
+                    setVehicleErrors={setVehicleErrors}
+                />
                 <div className={styles.buttonsContainer}>
                     <SubmissionButton
                         text={'Save'}

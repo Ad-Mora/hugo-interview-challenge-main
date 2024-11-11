@@ -34,6 +34,7 @@ function makeSchemaNullableAndPartial<T extends ZodTypeAny>(schema: T): T {
 }
 
 const VehicleSchema = z.object({
+    id: z.string(),
     vin: z.string().min(1),
     year: z
         .number()
@@ -68,5 +69,11 @@ const ApplicationSchema = z.object({
 });
 
 const IncompleteApplicationSchema = makeSchemaNullableAndPartial(ApplicationSchema);
+const IncompleteVehicleSchema = makeSchemaNullableAndPartial(VehicleSchema);
 
-export { VehicleSchema, ApplicationSchema, IncompleteApplicationSchema };
+export {
+    VehicleSchema,
+    ApplicationSchema,
+    IncompleteApplicationSchema,
+    IncompleteVehicleSchema,
+};

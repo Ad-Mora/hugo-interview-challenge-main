@@ -24,7 +24,7 @@ function convertAppFromDbFormat(application: DbApplication) {
     const vehicles =
         application.vehicles === null
             ? null
-            : (JSON.parse(application.vehicles) as [Vehicle]);
+            : (JSON.parse(application.vehicles) as Vehicle[]);
     return { ...application, vehicles };
 }
 

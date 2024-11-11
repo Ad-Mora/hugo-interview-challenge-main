@@ -1,6 +1,9 @@
-import type { IncompleteApplication } from '../../types';
+import type { IncompleteApplication, IncompleteVehicleData } from '../../types';
 
 type ApplicationField = keyof IncompleteApplication;
-type AppErrors = Partial<Record<ApplicationField, String>>;
+type AppErrors = Partial<Record<ApplicationField, string>>;
 
-export type { ApplicationField, AppErrors };
+type VehicleField = keyof IncompleteVehicleData;
+type VehicleErrors = Record<string, Partial<Record<VehicleField, string>>;
+
+export type { ApplicationField, AppErrors, VehicleErrors };

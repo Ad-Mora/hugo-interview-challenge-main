@@ -3,6 +3,7 @@ import {
     VehicleSchema,
     ApplicationSchema,
     IncompleteApplicationSchema,
+    IncompleteVehicleSchema,
 } from './zod-schemas';
 
 type Nullable<T> = {
@@ -13,7 +14,17 @@ type Vehicle = z.infer<typeof VehicleSchema>;
 type Application = z.infer<typeof ApplicationSchema>;
 
 // inferred type doesn't account for nullability and partiality
-type InferredIncompleteApplication = z.infer<typeof IncompleteApplicationSchema>;
-type IncompleteApplication = Nullable<Partial<InferredIncompleteApplication>>;
+type InferredIncompleteVehicleData = z.infer<typeof IncompleteVehicleSchema>;
+type IncompleteVehicleData = Nullable<Partial<InferredIncompleteVehicleData>>;
 
-export type { Application, Vehicle, IncompleteApplication };
+// explicitly define the vehicles subfield as being allowed to be incomplete
+type InferredIncompleteApplication = z.infer<typeof IncompleteApplicationSchema>;
+type IncompleteApplication = Nullable<
+    Partial<
+        Omit<InferredIncompleteApplication, 'vehicles'> & {
+            vehicles?: IncompleteVehicleData[] | null;
+        }
+    >
+>;
+
+export type { Application, Vehicle, IncompleteApplication, IncompleteVehicleData };

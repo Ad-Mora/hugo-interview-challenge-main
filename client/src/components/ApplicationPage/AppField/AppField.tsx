@@ -2,13 +2,12 @@ import styles from './styles.module.css';
 import React from 'react';
 import { IncompleteApplication } from '../../../../../types';
 import { AppErrors, ApplicationField } from '../../../types';
-import VehiclesInput from '../VehiclesInput/VehiclesInput';
 import { IncompleteApplicationSchema } from '../../../../../zod-schemas';
 
 interface AppFieldProps {
-    fieldName: ApplicationField;
+    fieldName: Exclude<ApplicationField, 'vehicles'>;
     label: string;
-    values: IncompleteApplication;
+    values: Omit<IncompleteApplication, 'vehicles'>;
     errors: AppErrors;
     setValues: React.Dispatch<React.SetStateAction<IncompleteApplication>>;
     setErrors: React.Dispatch<React.SetStateAction<AppErrors>>;
@@ -30,7 +29,7 @@ function AppField({
     }
 
     function handleBlur(e: React.FocusEvent<HTMLInputElement>) {
-        const name = e.target.name as ApplicationField;
+        const name = e.target.name as Exclude<ApplicationField, 'Vehicles'>;
         const value = e.target.value || null;
         setValues((prev) => ({ ...prev, [name]: value }));
         if (value) {
@@ -51,30 +50,25 @@ function AppField({
         }
         setErrors((prev) => ({ ...prev, [name]: error }));
     }
+    const fieldValue = values[fieldName];
 
-    if (fieldName === 'vehicles') {
-        <VehiclesInput />;
-    } else {
-        const fieldValue = values[fieldName];
-
-        return (
-            <div className={styles.fieldContainer}>
-                <div className={styles.inputContainer}>
-                    <p className={styles.label}>{label}</p>
-                    <input
-                        className={styles.textInput}
-                        name={fieldName}
-                        type="text"
-                        value={fieldValue ?? ''}
-                        placeholder={placeholder}
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                    />
-                </div>
-                <p className={styles.errorText}>{errors[fieldName]}</p>
+    return (
+        <div className={styles.fieldContainer}>
+            <div className={styles.inputContainer}>
+                <p className={styles.label}>{label}</p>
+                <input
+                    className={styles.textInput}
+                    name={fieldName}
+                    type="text"
+                    value={fieldValue ?? ''}
+                    placeholder={placeholder}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                />
             </div>
-        );
-    }
+            <p className={styles.errorText}>{errors[fieldName]}</p>
+        </div>
+    );
 }
 
 export default AppField;
