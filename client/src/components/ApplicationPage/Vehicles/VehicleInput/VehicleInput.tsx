@@ -29,7 +29,11 @@ function VehicleInput({
         if (newVehicles.length === 0) {
             setVehicles(null);
         }
+        const newVehicleErrors = { ...vehicleErrors };
+        delete newVehicleErrors[id];
+
         setVehicles(newVehicles);
+        setVehicleErrors(newVehicleErrors);
     }
 
     return (
