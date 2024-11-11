@@ -10,7 +10,8 @@
         "start:client": "vite ./client",
         "start": "concurrently --kill-others \"npm run start:api\" \"npm run start:client\"",
         "migrate": "prisma migrate dev --schema ./api/prisma/schema.prisma",
-        "studio": "prisma studio --schema ./api/prisma/schema.prisma"
+        "studio": "prisma studio --schema ./api/prisma/schema.prisma",
+        "reset": "prisma migrate reset --schema ./api/prisma/schema.prisma --force"
     },
     "repository": {
         "type": "git",
